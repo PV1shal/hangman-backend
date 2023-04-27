@@ -40,10 +40,20 @@ export default class UsersDAO {
                 username: user.username,
                 score: user.score,
             }
-            const result = await users.insertOne({ _id: userData.username, username: userData.username, score: userData.score });
-            return { message: "Added New User successfully", insertedId: result.insertedId };
+            const existingUser = await users.findOne({ _id: userData.username });
+            if (existingUser) {
+                const result = await users.findOneAndUpdate(
+                    { _id: userData.username },
+                    { $set: { score: userData.score } },
+                    { returnOriginal: false }
+                );
+                return { message: "User updated successfully", updatedUser: result.value };
+            } else {
+                const result = await users.insertOne({ _id: userData.username, username: userData.username, score: userData.score });
+                return { message: "Added New User successfully", insertedId: result.insertedId };
+            }
         } catch (error) {
-            console.error(`Unable to add user: ${error}`);
+            console.error(`Unable to add/update user: ${error}`);
             return { error: error.message };
         }
     }
