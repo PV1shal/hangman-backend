@@ -24,7 +24,7 @@ API URI: https://hangman-backend.herokuapp.com/api/hangman
 ### Games:
   - https://hangman-backend.herokuapp.com/api/hangman/games     
       - (GET) Gets all the games from db. Game called 'Main' will be the user vs computer mode.
-  - http://localhost:8000/api/hangman/games/:id
+  -  https://hangman-backend.herokuapp.com/api/hangman/games/:id
       - (GET) Gets the game with that 'id'.
       - id = 'Main', user vs computer mode.
       - other ids are the games created by a user.
